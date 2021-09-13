@@ -42,14 +42,17 @@ function checkKey(e) {
 function ballMove () {
 	if (game[ballVertical][ballHorizontal + moveHorizontal] === "▓") {
 		game[ballVertical][ballHorizontal + moveHorizontal] = "░";
+		moveHorizontal *= -1;
 		scoring();
 	}
 	if (game[ballVertical + moveVertical][ballHorizontal] === "▓") {
 		game[ballVertical + moveVertical][ballHorizontal] = "░";
+		moveVertical *= -1;
 		 scoring();
 	}
 	if (game[ballVertical + moveVertical][ballHorizontal + moveHorizontal] === "▓") {
 		game[ballVertical + moveVertical][ballHorizontal + moveHorizontal] = "░";
+		moveVertical *= -1;
 		scoring();
 	}
 	if (ballVertical === 1) {
@@ -127,7 +130,6 @@ function setScore(score) {
 	$("#score").html(lifeScore);
 }
 function scoring() {
-	moveVertical *= -1;
 	score += 10;
 	setScore(score);
 }
