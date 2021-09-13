@@ -190,4 +190,3 @@ let bar = [barMiddle-3, barMiddle-2, barMiddle-1, barMiddle , barMiddle+1, barMi
 let score, life, runGame, moveVertical, moveHorizontal;
 $(document).keydown(checkKey);
 reset();
-alert("Press 'space' to start, arrow keys to move.");
