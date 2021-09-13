@@ -1,9 +1,7 @@
 const initialization = '' +
-'<div id="gameArea" class="white-section-area-thing" style=\"text-align: center; font-family: monospace; zoom: 135%; line-height: normal;\">' +
-'<b>' +
+'<b id="gameArea" class="white-section-area-thing" style=\"text-align: center; font-family: monospace; zoom: 135%; line-height: normal;\">' +
 	'<p id=\"life\"><p id=\"score\"></p><p id=\"game\"></p>' +
-'</b>' +
-'</div>';
+'</b>';
 $(".main-title").after(initialization);
 function checkKey(e) {
 	function moveBar (a, b) {
