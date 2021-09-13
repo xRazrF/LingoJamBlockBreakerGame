@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>Editor</title>
+		<link rel="icon" href="https://lingojam.com/favicon.png">
+		<style>
+			.responsive-iframe {
+				position: absolute;
+				top: 0;
+				bottom: 0;
+				left: 0;
+				right: 0;
+				margin: 0;
+				padding: 0;
+				border: none;
+				overflow: hidden;
+				z-index: 999999;
+				height: 100%;
+				width: 100%;
+			}
+			#center {
+				margin: 0;
+				position: absolute;
+				top: 50%;
+				left: 50%;
+				-ms-transform: translate(-50%, -50%);
+				transform: translate(-50%, -50%);
+			}
+		</style>
+		<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/3.1.2/rollups/aes.js" integrity="sha256-/H4YS+7aYb9kJ5OKhFYPUjSJdrtV6AeyJOtTkw6X72o=" crossorigin="anonymous"></script>
+	</head>
+	<body>
+		<iframe id="mainFrame" class="responsive-iframe"></iframe><script>
+			$("#mainFrame").hide();
+		</script>
+		<div id="center">
+			<form>
+				<label for="password">
+					Password:
+				</label>
+				<input type="password" id="password">
+				<input onclick="checkpassword();" type="button" value="Submit"/><script>
+					function checkpassword() {
+						const password = $("#password").val();
+						const encrypt = "U2FsdGVkX1+wZ5wnsEApNIq4Cx+3WAMV4unfMt8++bbKrbHV7OclnzCQ2gTtYhmwxwKNnIwWoLoIF2SBUXYoKQ==";
+						const decrypt = CryptoJS.AES.decrypt(encrypt, password).toString(CryptoJS.enc.Utf8);
+						const link ="https://lingojam.com/" + decrypt;
+						$("#center").hide();
+						$('#mainFrame').attr('src',link).show();
+					}
+				</script>
+			</form>
+		</div>
+	</body>
+</html>
