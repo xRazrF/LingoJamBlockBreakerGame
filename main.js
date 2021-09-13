@@ -1,5 +1,5 @@
 const initialization = '' +
-'<b id="gameArea" class="white-section-area-thing" style=\"text-align: center; font-family: monospace; zoom: 135%; line-height: normal;\">' +
+'<b id="gameArea" style=\"text-align: center; font-family: monospace; zoom: 135%; line-height: normal;\">' +
 	'<p id=\"life\"><p id=\"score\"></p><p id=\"game\"></p>' +
 '</b>';
 $(".main-title").after(initialization);
