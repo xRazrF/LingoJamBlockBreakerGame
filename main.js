@@ -1,8 +1,3 @@
-const initialization = '' +
-'<b id="gameArea" style=\"text-align: center; font-family: monospace; zoom: 135%; line-height: normal;\">' +
-	'<p id=\"life\"><p id=\"score\"></p><p id=\"game\"></p>' +
-'</b>';
-$(".main-title").after(initialization);
 function checkKey(e) {
 	function moveBar (a, b) {
 		game[barLocation][bar[a] + b] = "▀";
@@ -174,6 +169,18 @@ function reset() {
 	}
 	updatePosition();
 }
+function init() {
+	const initialization = '' +
+	'<b id="gameArea" style=\"text-align: center; font-family: monospace; zoom: 135%; line-height: normal;\">' +
+		'<p id=\"life\"><p id=\"score\"></p><p id=\"game\"></p>' +
+	'</b>';
+	$(".main-title").after(initialization);
+	resetGame = JSON.parse(JSON.stringify(game));
+	play = "stop";
+	ballVertical = barLocation-1;
+	ballHorizontal = (game[ballVertical].length/2)-(1/2);
+	bar = [barMiddle-3, barMiddle-2, barMiddle-1, barMiddle , barMiddle+1, barMiddle+2, barMiddle+3];
+}
 let game = [];
 game.push(["█", "█", "█", "█", "█", "█", "█", "█","█", "█", "█", "█", "█", "█", "█", "█", "█", "█", "█", "█", "█", "█", "█", "█", "█", "█", "█", "█", "█", "█", "█", "█", "█", "█", "█", "█", "█", "█", "█", "█", "█", "█","█", "█", "█", "█", "█", "█", "█", "█", "█"]);
 game.push(["█", "█", "▓", "▓","▓", "▓","▓", "▓","▓", "▓", "▓", "▓", "▓", "▓", "▓", "▓", "▓", "▓", "▓", "▓", "▓", "▓", "▓", "▓", "▓", "▓", "▓", "▓", "▓", "▓", "▓", "▓", "▓", "▓", "▓", "▓", "▓", "▓", "▓", "▓", "▓", "▓","▓", "▓", "▓", "▓", "▓", "▓", "▓", "█", "█"]);
@@ -198,13 +205,10 @@ game.push(["█", "█", "░", "░","░", "░", "░", "░", "░", "░", 
 game.push(["█", "█", "░", "░","░", "░", "░", "░", "░", "░", "░", "░", "░", "░", "░", "░", "░", "░", "░", "░", "░", "░", "░", "░", "░", "●", "░", "░", "░", "░","░", "░", "░", "░", "░", "░", "░", "░", "░", "░", "░", "░", "░", "░", "░", "░", "░", "░", "░", "█", "█"]);
 game.push(["█", "█", "░", "░", "░", "░", "░", "░", "░", "░", "░", "░", "░", "░", "░", "░", "░", "░", "░", "░", "░", "░","▀", "▀", "▀", "▀", "▀", "▀", "▀", "░", "░", "░", "░", "░", "░", "░", "░", "░", "░", "░", "░", "░","░", "░", "░", "░", "░", "░", "░", "█", "█"]);
 game.push(["█", "█", "█", "█", "█", "█", "█", "█","█", "█", "█", "█", "█", "█", "█", "█", "█", "█", "█", "█", "█", "█", "█", "█", "█", "█", "█", "█", "█", "█", "█", "█", "█", "█", "█", "█", "█", "█", "█", "█", "█", "█","█", "█", "█", "█", "█", "█", "█", "█", "█"]);
-let resetGame = JSON.parse(JSON.stringify(game));
-let play = "stop";
 const barLocation = game.length-2;
-let ballVertical = barLocation-1;
-let ballHorizontal = (game[ballVertical].length/2)-(1/2);
 const barMiddle = (game[barLocation].length/2)-(1/2);
-let bar = [barMiddle-3, barMiddle-2, barMiddle-1, barMiddle , barMiddle+1, barMiddle+2, barMiddle+3];
-let score, life, runGame, moveVertical, moveHorizontal;
+let bar, ballVertical, ballHorizontal;
+let play, resetGame, score, life, runGame, moveVertical, moveHorizontal;
 $(document).keydown(checkKey);
+init();
 reset();
