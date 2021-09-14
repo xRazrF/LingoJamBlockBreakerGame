@@ -65,7 +65,15 @@ function ballMove () {
 				ballHorizontal += randomDirection();
 				game[ballVertical ][ballHorizontal ] = "●";
 			}
-			moveHorizontal = randomDirection();
+			if (game[ballVertical][ballHorizontal - 1] === "█") {
+				moveHorizontal = 1;
+			}
+			else if (game[ballVertical][ballHorizontal + 1] === "█") {
+				moveHorizontal = -1;
+			}
+			else {
+				moveHorizontal = randomDirection();
+			}
 			moveVertical *= -1;
 		}
 		else if  (game[ballVertical + moveVertical][ballHorizontal + moveHorizontal] === "█") {
