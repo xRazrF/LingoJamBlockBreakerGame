@@ -1,7 +1,7 @@
 function checkKey(e) {
 	function moveBar (a, b) {
-		game[barLocation][bar[a] + b] = "▀";
-		game[barLocation][bar[a]] = "░";
+		game[barVertical][bar[a] + b] = "▀";
+		game[barVertical][bar[a]] = "░";
 		bar[a] += b;
 	}
 	e = e || window.event;
@@ -14,7 +14,7 @@ function checkKey(e) {
 		updatePosition ();
 	}
 	else if (e.keyCode === 39 && play === "play") {
-		if (bar[6] != game[barLocation].length-3) {
+		if (bar[6] != game[barVertical].length-3) {
 			for (let i = 6; i >= 0; i--){
 				moveBar(i, 1);
 			}
@@ -66,7 +66,7 @@ function ballMove () {
 	if (ballVertical === 1) {
 		moveVertical *= -1;
 	}
-	if (ballVertical === barLocation-1) {
+	if (ballVertical === barVertical-1) {
 		if (game[ballVertical + moveVertical][ballHorizontal + moveHorizontal] === "▀") {
 			if (game[ballVertical + moveVertical][ballHorizontal + moveHorizontal - 1] === "▀" && game[ballVertical + moveVertical][ballHorizontal + moveHorizontal + 1] === "▀"  && game[ballVertical + moveVertical][ballHorizontal + moveHorizontal - 2] === "▀" && game[ballVertical + moveVertical][ballHorizontal + moveHorizontal + 2] === "▀") {
 				game[ballVertical ][ballHorizontal ] = "░";
@@ -113,7 +113,7 @@ function ballMove () {
 	if (ballHorizontal === 2) {
 		moveHorizontal *= -1;
 	}
-	if (ballHorizontal === game[barLocation].length - 3) {
+	if (ballHorizontal === game[barVertical].length - 3) {
 		moveHorizontal *= -1;
 	}
 	game[ballVertical + moveVertical][ballHorizontal + moveHorizontal] = "●";
@@ -150,17 +150,17 @@ function scoring() {
 }
 function reset() {
 	game[ballVertical][ballHorizontal] = "░";
-	ballVertical = barLocation-1;
+	ballVertical = barVertical-1;
 	ballHorizontal = (game[ballVertical].length/2)-(1/2);
 	game[ballVertical][ballHorizontal] = "●";
 	for (let i = 0; i <=6; i++) {
-		game[barLocation][bar[i]] = "░";
+		game[barVertical][bar[i]] = "░";
 	}
 	moveVertical = -1;
 	moveHorizontal = -1; 
-	bar = [barMiddle-3, barMiddle-2, barMiddle-1, barMiddle , barMiddle+1, barMiddle+2, barMiddle+3];
+	bar = [barHorizontal-3, barHorizontal-2, barHorizontal-1, barHorizontal , barHorizontal+1, barHorizontal+2, barHorizontal+3];
 	for (let i = 0; i <=6; i++) {
-		game[barLocation][bar[i]] = "▀";
+		game[barVertical][bar[i]] = "▀";
 	}
 	if (play === "stop") {
 		score = 0;
@@ -179,9 +179,9 @@ function init() {
 	$(".main-title").after(initialization);
 	resetGame = JSON.parse(JSON.stringify(game));
 	play = "stop";
-	ballVertical = barLocation-1;
+	ballVertical = barVertical-1;
 	ballHorizontal = (game[ballVertical].length/2)-(1/2);
-	bar = [barMiddle-3, barMiddle-2, barMiddle-1, barMiddle , barMiddle+1, barMiddle+2, barMiddle+3];
+	bar = [barHorizontal-3, barHorizontal-2, barHorizontal-1, barHorizontal , barHorizontal+1, barHorizontal+2, barHorizontal+3];
 }
 let game = [];
 game.push(["█", "█", "█", "█", "█", "█", "█", "█","█", "█", "█", "█", "█", "█", "█", "█", "█", "█", "█", "█", "█", "█", "█", "█", "█", "█", "█", "█", "█", "█", "█", "█", "█", "█", "█", "█", "█", "█", "█", "█", "█", "█","█", "█", "█", "█", "█", "█", "█", "█", "█"]);
@@ -207,8 +207,8 @@ game.push(["█", "█", "░", "░","░", "░", "░", "░", "░", "░", 
 game.push(["█", "█", "░", "░","░", "░", "░", "░", "░", "░", "░", "░", "░", "░", "░", "░", "░", "░", "░", "░", "░", "░", "░", "░", "░", "●", "░", "░", "░", "░","░", "░", "░", "░", "░", "░", "░", "░", "░", "░", "░", "░", "░", "░", "░", "░", "░", "░", "░", "█", "█"]);
 game.push(["█", "█", "░", "░", "░", "░", "░", "░", "░", "░", "░", "░", "░", "░", "░", "░", "░", "░", "░", "░", "░", "░","▀", "▀", "▀", "▀", "▀", "▀", "▀", "░", "░", "░", "░", "░", "░", "░", "░", "░", "░", "░", "░", "░","░", "░", "░", "░", "░", "░", "░", "█", "█"]);
 game.push(["█", "█", "█", "█", "█", "█", "█", "█","█", "█", "█", "█", "█", "█", "█", "█", "█", "█", "█", "█", "█", "█", "█", "█", "█", "█", "█", "█", "█", "█", "█", "█", "█", "█", "█", "█", "█", "█", "█", "█", "█", "█","█", "█", "█", "█", "█", "█", "█", "█", "█"]);
-const barLocation = game.length-2;
-const barMiddle = (game[barLocation].length/2)-(1/2);
+const barVertical = game.length-2;
+const barHorizontal = (game[barVertical].length/2)-(1/2);
 let bar, ballVertical, ballHorizontal;
 let play, resetGame, score, life, runGame, moveVertical, moveHorizontal;
 $(document).keydown(checkKey);
