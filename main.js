@@ -10,7 +10,7 @@ function checkKey(e) {
 		bar[a] += b;
 	}
 	e = e || window.event;
-	if (e.keyCode === 37 && play === 1) {
+	if (e.keyCode === 37 && play === "play") {
 		if (bar[0] != 2) {
 			for (let i = 0; i <= 6; i++){
 				moveBar(i, -1);
@@ -18,7 +18,7 @@ function checkKey(e) {
 		}
 		updatePosition ();
 	}
-	else if (e.keyCode === 39 && play === 1) {
+	else if (e.keyCode === 39 && play === "play") {
 		if (bar[6] != game[barLocation].length-3) {
 			for (let i = 6; i >= 0; i--){
 				moveBar(i, 1);
@@ -28,14 +28,26 @@ function checkKey(e) {
 	}
 	if (e.keyCode === 32) {
 		e.preventDefault();
-		if (play === 0 || play === 2) {
+		if (play === "stop" || play === "break") {
 			const randomHorizontal = [1, -1];
 			const random = randomHorizontal[Math.floor(Math.random() * randomHorizontal.length)];
 			moveHorizontal = random;
-			play = 1;
+			play = "play";
 			runGame = window.setInterval(function(){
 				ballMove ();
 			}, 100);
+		}
+		else if (play === "play") {
+			clearInterval(runGame);
+			$("#score").html("Paused");
+			play = "pause";
+		}
+		else if  (play === "pause") {
+			runGame = window.setInterval(function(){
+				ballMove ();
+			}, 100);
+			setScore(score);
+			play = "play";
 		}
 	}
 }
@@ -81,12 +93,12 @@ function ballMove () {
 		}
 		else if (moveVertical === 1) {
 			if (life === 0) {
-				play = 0;
+				play = "stop";
 			}
 			else {
 				clearInterval(runGame);
 				setTimeout(function () {
-					play = 2;
+					play = "break";
 					life -= 1;
 					setLife(life);
 					reset();
@@ -105,7 +117,7 @@ function ballMove () {
 	ballVertical += moveVertical;
 	ballHorizontal += moveHorizontal;
 	updatePosition();
-	if (play === 0) {
+	if (play === "stop") {
 		clearInterval(runGame);
 		setTimeout(function () {
 			const gameOver = "Game Over!\nYour score: " + score + " pts"
@@ -155,7 +167,7 @@ function reset() {
 	for (let i = 0; i <=6; i++) {
 		game[barLocation][bar[i]] = "▀";
 	}
-	if (play === 0) {
+	if (play === "stop") {
 		score = 0;
 		life = 3;
 		setScore(score);
@@ -189,7 +201,7 @@ game.push(["█", "█", "░", "░","░", "░", "░", "░", "░", "░", 
 game.push(["█", "█", "░", "░", "░", "░", "░", "░", "░", "░", "░", "░", "░", "░", "░", "░", "░", "░", "░", "░", "░", "░","▀", "▀", "▀", "▀", "▀", "▀", "▀", "░", "░", "░", "░", "░", "░", "░", "░", "░", "░", "░", "░", "░","░", "░", "░", "░", "░", "░", "░", "█", "█"]);
 game.push(["█", "█", "█", "█", "█", "█", "█", "█","█", "█", "█", "█", "█", "█", "█", "█", "█", "█", "█", "█", "█", "█", "█", "█", "█", "█", "█", "█", "█", "█", "█", "█", "█", "█", "█", "█", "█", "█", "█", "█", "█", "█","█", "█", "█", "█", "█", "█", "█", "█", "█"]);
 let resetGame = JSON.parse(JSON.stringify(game));
-let play = 0;
+let play = "stop";
 const barLocation = game.length-2;
 let ballVertical = barLocation-1;
 let ballHorizontal = (game[ballVertical].length/2)-(1/2);
