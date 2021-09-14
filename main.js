@@ -22,6 +22,7 @@ function checkKey(e) {
 		updatePosition ();
 	}
 	if (e.keyCode === 32) {
+		const ballSlow = 100;
 		e.preventDefault();
 		if (play === "stop" || play === "break") {
 			const randomHorizontal = [1, -1];
@@ -208,7 +209,6 @@ game.push(["█", "█", "░", "░", "░", "░", "░", "░", "░", "░",
 game.push(["█", "█", "█", "█", "█", "█", "█", "█","█", "█", "█", "█", "█", "█", "█", "█", "█", "█", "█", "█", "█", "█", "█", "█", "█", "█", "█", "█", "█", "█", "█", "█", "█", "█", "█", "█", "█", "█", "█", "█", "█", "█","█", "█", "█", "█", "█", "█", "█", "█", "█"]);
 const barLocation = game.length-2;
 const barMiddle = (game[barLocation].length/2)-(1/2);
-const ballSlow = 100;
 let bar, ballVertical, ballHorizontal;
 let play, resetGame, score, life, runGame, moveVertical, moveHorizontal;
 $(document).keydown(checkKey);
