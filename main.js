@@ -30,7 +30,7 @@ function checkKey(e) {
 			play = "play";
 			runGame = window.setInterval(function(){
 				ballMove ();
-			}, 100);
+			}, ballSlow);
 		}
 		else if (play === "play") {
 			clearInterval(runGame);
@@ -40,7 +40,7 @@ function checkKey(e) {
 		else if  (play === "pause") {
 			runGame = window.setInterval(function(){
 				ballMove ();
-			}, 100);
+			}, ballSlow);
 			setScore(score);
 			play = "play";
 		}
@@ -87,6 +87,7 @@ function ballMove () {
 			moveVertical *= -1;
 		}
 		else if (moveVertical === 1) {
+			const resetDelay = 100;
 			if (life === 0) {
 				play = "stop";
 				clearInterval(runGame);
@@ -95,7 +96,7 @@ function ballMove () {
 					alert(gameOver);
 					console.log(gameOver);
 					reset();
-					}, 100);
+					}, resetDelay);
 			}
 			else {
 				clearInterval(runGame);
@@ -104,7 +105,7 @@ function ballMove () {
 					life -= 1;
 					setLife(life);
 					reset();
-					}, 100);
+					}, resetDelay);
 			}
 		}
 	}
@@ -207,6 +208,7 @@ game.push(["█", "█", "░", "░", "░", "░", "░", "░", "░", "░",
 game.push(["█", "█", "█", "█", "█", "█", "█", "█","█", "█", "█", "█", "█", "█", "█", "█", "█", "█", "█", "█", "█", "█", "█", "█", "█", "█", "█", "█", "█", "█", "█", "█", "█", "█", "█", "█", "█", "█", "█", "█", "█", "█","█", "█", "█", "█", "█", "█", "█", "█", "█"]);
 const barLocation = game.length-2;
 const barMiddle = (game[barLocation].length/2)-(1/2);
+const ballSlow = 100;
 let bar, ballVertical, ballHorizontal;
 let play, resetGame, score, life, runGame, moveVertical, moveHorizontal;
 $(document).keydown(checkKey);
