@@ -94,6 +94,13 @@ function ballMove () {
 		else if (moveVertical === 1) {
 			if (life === 0) {
 				play = "stop";
+				clearInterval(runGame);
+				setTimeout(function () {
+					const gameOver = "Game Over!\nYour score: " + score + " pts"
+					alert(gameOver);
+					console.log(gameOver);
+					reset();
+					}, 100);
 			}
 			else {
 				clearInterval(runGame);
@@ -117,15 +124,6 @@ function ballMove () {
 	ballVertical += moveVertical;
 	ballHorizontal += moveHorizontal;
 	updatePosition();
-	if (play === "stop") {
-		clearInterval(runGame);
-		setTimeout(function () {
-			const gameOver = "Game Over!\nYour score: " + score + " pts"
-			alert(gameOver);
-			console.log(gameOver);
-			reset();
-			}, 100);
-	}
 }
 function updatePosition() {
 	$("#game").html(game.map(a => a.join('')).join('<br>'));
