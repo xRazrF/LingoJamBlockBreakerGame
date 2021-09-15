@@ -147,7 +147,7 @@ function randomDirection() {
 	return random;
 }
 function setLife(life) {
-	let lifeString = " ";
+	let lifeString = "";
 	for (let i = 0; i < life; i++) {
 		lifeString += "♥";
 	}
