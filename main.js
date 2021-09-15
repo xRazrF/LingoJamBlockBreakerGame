@@ -58,12 +58,18 @@ function ballMove () {
 		moveVertical *= -1;
 		 scoring();
 	}
-	if (game[ballVertical + moveVertical][ballHorizontal + moveHorizontal] === "▓") {
+	else if (game[ballVertical + moveVertical][ballHorizontal + moveHorizontal] === "▓") {
 		game[ballVertical + moveVertical][ballHorizontal + moveHorizontal] = "░";
 		moveVertical *= -1;
 		scoring();
 	}
-	if (ballVertical === 1) {
+	if (game[ballVertical][ballHorizontal + moveHorizontal] === "█") {
+		moveHorizontal *= -1;
+	}
+	if (game[ballVertical + moveVertical][ballHorizontal] === "█") {
+		moveVertical *= -1;
+	}
+	else if (game[ballVertical + moveVertical][ballHorizontal + moveHorizontal] === "█") {
 		moveVertical *= -1;
 	}
 	if (ballVertical === barVertical-1) {
@@ -109,12 +115,6 @@ function ballMove () {
 					}, resetDelay);
 			}
 		}
-	}
-	if (ballHorizontal === 2) {
-		moveHorizontal *= -1;
-	}
-	if (ballHorizontal === game[barVertical].length - 3) {
-		moveHorizontal *= -1;
 	}
 	game[ballVertical + moveVertical][ballHorizontal + moveHorizontal] = "●";
 	game[ballVertical][ballHorizontal] = "░";
@@ -173,7 +173,7 @@ function reset() {
 }
 function init() {
 	const initialization = '' +
-	'<b id="gameArea" style=\"text-align: center; font-family: monospace; zoom: 135%; line-height: normal;\">' +
+	'<b id="gameArea" style=\"text-align: center; font-family: Consolas; line-height: normal;\">' +
 		'<p id=\"life\"><p id=\"score\"></p><p id=\"game\"></p>' +
 	'</b>';
 	$(".main-title").after(initialization);
