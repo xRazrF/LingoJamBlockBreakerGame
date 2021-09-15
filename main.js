@@ -99,7 +99,7 @@ function ballMove () {
 				play = "stop";
 				clearInterval(runGame);
 				setTimeout(function () {
-					const gameOver = "Game Over!\nYour score: " + score + " pts"
+					const gameOver = "Game Over!\nYour score: " + score + " pts";
 					alert(gameOver);
 					console.log(gameOver);
 					reset();
