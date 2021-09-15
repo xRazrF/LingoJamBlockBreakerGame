@@ -58,6 +58,10 @@ function checkKey(e) {
 	}
 }
 function ballMove () {
+	function scoring() {
+		score += 10;
+		setScore(score);
+	}
 	if (game[ballVertical][ballHorizontal + moveHorizontal] === "▓") {
 		game[ballVertical][ballHorizontal + moveHorizontal] = "░";
 		moveHorizontal *= -1;
@@ -153,10 +157,6 @@ function setLife(life) {
 function setScore(score) {
 	let lifeScore = "Score: " + score + " pts";
 	$("#score").html(lifeScore);
-}
-function scoring() {
-	score += 10;
-	setScore(score);
 }
 function reset() {
 	game[ballVertical][ballHorizontal] = "░";
