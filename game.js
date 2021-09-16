@@ -29,7 +29,7 @@ function gameControl(e) {
 		else if (game[ballVertical + moveVertical][ballHorizontal + moveHorizontal] === "█") {
 			moveVertical *= -1;
 		}
-		if (game[ballVertical + moveVertical][ballHorizontal + moveHorizontal] === "▀") {
+		if (game[ballVertical + moveVertical][ballHorizontal + moveHorizontal] === "▀" || game[ballVertical + moveVertical][ballHorizontal] === "▀") {
 			if (game[ballVertical + moveVertical][ballHorizontal + moveHorizontal - 1] === "▀" && game[ballVertical + moveVertical][ballHorizontal + moveHorizontal + 1] === "▀"  && game[ballVertical + moveVertical][ballHorizontal + moveHorizontal - 2] === "▀" && game[ballVertical + moveVertical][ballHorizontal + moveHorizontal + 2] === "▀") {
 				game[ballVertical ][ballHorizontal ] = "░";
 				ballHorizontal += randomDirection();
