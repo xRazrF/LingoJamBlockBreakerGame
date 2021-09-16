@@ -7,9 +7,9 @@ function checkKey(e) {
 	const barLength = bar.length - 1;
 	const barFirst = 0;
 	e = e || window.event;
-	if (e.keyCode === 37 && play !== "pause") {
+	if (e.keyCode === 37 && playState !== "pause") {
 		if (game[barVertical][bar[barFirst] - 1] !== "█") {
-			if (play !== "play") {
+			if (playState !== "play") {
 				game[ballVertical][ballHorizontal] = "░";
 				game[ballVertical][ballHorizontal + -1] = "●";
 				ballHorizontal += -1;
@@ -20,9 +20,9 @@ function checkKey(e) {
 		}
 		updatePosition ();
 	}
-	else if (e.keyCode === 39 && play !== "pause") {
+	else if (e.keyCode === 39 && playState !== "pause") {
 		if (game[barVertical][bar[barLength] + 1] !== "█") {
-			if (play !== "play") {
+			if (playState !== "play") {
 				game[ballVertical][ballHorizontal] = "░";
 				game[ballVertical][ballHorizontal + 1] = "●";
 				ballHorizontal += 1;
@@ -36,24 +36,24 @@ function checkKey(e) {
 	if (e.keyCode === 32) {
 		const ballSlow = 100;
 		e.preventDefault();
-		if (play === "stop" || play === "break") {
+		if (playState === "stop" || playState === "break") {
 			moveHorizontal = randomDirection();
-			play = "play";
-			runGame = window.setInterval(function(){
+			playState = "play";
+			gameInterval = window.setInterval(function(){
 				ballMove ();
 			}, ballSlow);
 		}
-		else if (play === "play") {
-			clearInterval(runGame);
+		else if (playState === "play") {
+			clearInterval(gameInterval);
 			$("#score").html("Paused");
-			play = "pause";
+			playState = "pause";
 		}
-		else if  (play === "pause") {
-			runGame = window.setInterval(function(){
+		else if  (playState === "pause") {
+			gameInterval = window.setInterval(function(){
 				ballMove ();
 			}, ballSlow);
 			setScore(score);
-			play = "play";
+			playState = "play";
 		}
 	}
 }
@@ -97,8 +97,8 @@ function ballMove () {
 	}
 	if (ballVertical === barVertical) {
 		if (life === 0) {
-			clearInterval(runGame);
-							play = "stop";
+			clearInterval(gameInterval);
+			playState = "stop";
 			const gameOver = "Game Over!\nYour score: " + score + " pts";
 			alert(gameOver);
 			console.log(gameOver);
@@ -106,8 +106,8 @@ function ballMove () {
 			return;
 		}
 		else {
-			clearInterval(runGame);
-			play = "break";
+			clearInterval(gameInterval);
+			playState = "break";
 			life -= 1;
 			setLife(life);
 			reset();
@@ -143,7 +143,7 @@ function setScore(score) {
 	$("#score").html(lifeScore);
 }
 function reset() {
-	if (play === "stop") {
+	if (playState === "stop") {
 		game = JSON.parse(JSON.stringify(originalGame));
 		score = 0;
 		life = 3;
@@ -168,7 +168,7 @@ function reset() {
 	updatePosition();
 }
 function init() {
-	play = "stop";
+	playState = "stop";
 	originalGame = JSON.parse(JSON.stringify(game));
 	barVertical = game.length-2;
 	barHorizontal = (game[barVertical].length/2)-(1/2);
@@ -213,6 +213,8 @@ game.push(["█", "█", "░", "░","░", "░", "░", "░", "░", "░", 
 game.push(["█", "█", "░", "░","░", "░", "░", "░", "░", "░", "░", "░", "░", "░", "░", "░", "░", "░", "░", "░", "░", "░", "░", "░", "░", "░", "░", "░", "░", "░","░", "░", "░", "░", "░", "░", "░", "░", "░", "░", "░", "░", "░", "░", "░", "░", "░", "░", "░", "█", "█"]);
 game.push(["█", "█", "░", "░", "░", "░", "░", "░", "░", "░", "░", "░", "░", "░", "░", "░", "░", "░", "░", "░", "░", "░","░", "░", "░", "░", "░", "░", "░", "░", "░", "░", "░", "░", "░", "░", "░", "░", "░", "░", "░", "░","░", "░", "░", "░", "░", "░", "░", "█", "█"]);
 game.push(["█", "█", "█", "█", "█", "█", "█", "█","█", "█", "█", "█", "█", "█", "█", "█", "█", "█", "█", "█", "█", "█", "█", "█", "█", "█", "█", "█", "█", "█", "█", "█", "█", "█", "█", "█", "█", "█", "█", "█", "█", "█","█", "█", "█", "█", "█", "█", "█", "█", "█"]);
-let bar, barVertical, barHorizontal, ballVertical, ballHorizontal;
-let play, score, originalGame, life, runGame, moveVertical, moveHorizontal;
+let bar, barVertical, barHorizontal;
+let ballVertical, ballHorizontal;
+let moveVertical, moveHorizontal;
+let playState, score, life, gameInterval, originalGame;
 init();
