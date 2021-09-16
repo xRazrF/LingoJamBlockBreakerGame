@@ -32,7 +32,7 @@ function checkKey(e) {
 		updatePosition ();
 	}
 	if (e.keyCode === 32) {
-		const ballSlow = 100;
+		const ballSlowness = 100;
 		e.preventDefault();
 		if (playState === "stop" || playState === "break") {
 			moveVertical = -1;
@@ -40,7 +40,7 @@ function checkKey(e) {
 			playState = "play";
 			gameInterval = window.setInterval(function(){
 				ballMove ();
-			}, ballSlow);
+			}, ballSlowness);
 		}
 		else if (playState === "play") {
 			clearInterval(gameInterval);
@@ -50,7 +50,7 @@ function checkKey(e) {
 		else if  (playState === "pause") {
 			gameInterval = window.setInterval(function(){
 				ballMove ();
-			}, ballSlow);
+			}, ballSlowness);
 			setScore(score);
 			playState = "play";
 		}
@@ -93,25 +93,25 @@ function ballMove () {
 		}
 		moveHorizontal = randomDirection();
 		moveVertical *= -1;
+		if (game[ballVertical + moveVertical][ballHorizontal + moveHorizontal] === "█") {
+			moveHorizontal *= -1
+		}
 	}
 	if (ballVertical === barVertical) {
+		clearInterval(gameInterval);
 		if (life === 0) {
-			clearInterval(gameInterval);
 			playState = "stop";
 			const gameOver = "Game Over!\nYour score: " + score + " pts";
 			alert(gameOver);
 			console.log(gameOver);
-			reset();
-			return;
 		}
 		else {
-			clearInterval(gameInterval);
 			playState = "break";
 			life -= 1;
 			setLife(life);
-			reset();
-			return;
 		}
+		reset();
+		return;
 	}
 	game[ballVertical + moveVertical][ballHorizontal + moveHorizontal] = "●";
 	game[ballVertical][ballHorizontal] = "░";
@@ -173,8 +173,8 @@ function init() {
 	ballVertical = barVertical-1;
 	ballHorizontal = (game[ballVertical].length/2)-(1/2);
 	const initialization = '' +
-	'<b id="gameArea" style=\"text-align: center; font-family: Courier New; line-height: 100%;\">' +
-		'<p id=\"life\"><p id=\"score\"></p><p id=\"game\"></p>' +
+	'<b id="gameArea" style="text-align: center; font-family: Courier New; line-height: 100%;">' +
+		'<p id="life"><p id="score"></p><p id="game"></p>' +
 	'</b>';
 	$(".main-title").after(initialization);
 	$(document).keydown(checkKey);
