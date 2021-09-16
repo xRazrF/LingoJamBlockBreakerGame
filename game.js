@@ -1,11 +1,79 @@
-function checkKey(e) {
+function gameControl(e) {
+	e = e || window.event;
+	function moveBall() {
+		function scoring() {
+			gameScore += 10;
+			setScore(gameScore);
+		}
+		if (game[ballVertical][ballHorizontal + moveHorizontal] === "▓") {
+			game[ballVertical][ballHorizontal + moveHorizontal] = "░";
+			moveHorizontal *= -1;
+			scoring();
+		}
+		if (game[ballVertical + moveVertical][ballHorizontal] === "▓") {
+			game[ballVertical + moveVertical][ballHorizontal] = "░";
+			moveVertical *= -1;
+			 scoring();
+		}
+		else if (game[ballVertical + moveVertical][ballHorizontal + moveHorizontal] === "▓") {
+			game[ballVertical + moveVertical][ballHorizontal + moveHorizontal] = "░";
+			moveVertical *= -1;
+			scoring();
+		}
+		if (game[ballVertical][ballHorizontal + moveHorizontal] === "█") {
+			moveHorizontal *= -1;
+		}
+		if (game[ballVertical + moveVertical][ballHorizontal] === "█") {
+			moveVertical *= -1;
+		}
+		else if (game[ballVertical + moveVertical][ballHorizontal + moveHorizontal] === "█") {
+			moveVertical *= -1;
+		}
+		if (game[ballVertical + moveVertical][ballHorizontal + moveHorizontal] === "▀") {
+			if (game[ballVertical + moveVertical][ballHorizontal + moveHorizontal - 1] === "▀" && game[ballVertical + moveVertical][ballHorizontal + moveHorizontal + 1] === "▀"  && game[ballVertical + moveVertical][ballHorizontal + moveHorizontal - 2] === "▀" && game[ballVertical + moveVertical][ballHorizontal + moveHorizontal + 2] === "▀") {
+				game[ballVertical ][ballHorizontal ] = "░";
+				ballHorizontal += randomDirection();
+				game[ballVertical ][ballHorizontal ] = "●";
+			}
+			moveHorizontal = randomDirection();
+			moveVertical *= -1;
+			if (game[ballVertical + moveVertical][ballHorizontal + moveHorizontal] === "█") {
+				moveHorizontal *= -1;
+			}
+		}
+		if (ballVertical === barVertical) {
+			clearInterval(gameInterval);
+			if (gameLife === 0) {
+				gameState = "stop";
+				const gameOver = "Game Over!\nYour score: " + gameScore + " pts";
+				alert(gameOver);
+				console.log(gameOver);
+			}
+			else {
+				gameState = "break";
+				gameLife -= 1;
+				setLife(gameLife);
+			}
+			resetGame();
+			return;
+		}
+		game[ballVertical + moveVertical][ballHorizontal + moveHorizontal] = "●";
+		game[ballVertical][ballHorizontal] = "░";
+		ballVertical += moveVertical;
+		ballHorizontal += moveHorizontal;
+		updatePosition();
+	}
 	function moveBar (a, b) {
 		game[barVertical][bar[a] + b] = "▀";
 		game[barVertical][bar[a]] = "░";
 		bar[a] += b;
 	}
-	e = e || window.event;
-	if (e.keyCode === 37 && gameState !== "pause") {
+	function randomDirection() {
+		const directions = [1, -1];
+		const random = directions[Math.floor(Math.random() * directions.length)];
+		return random;
+	}
+	if (e.keyCode === 37 && gameState !== "pause") { //←
 		if (game[barVertical][bar[barFirst] - 1] !== "█") {
 			if (gameState !== "play") {
 				game[ballVertical][ballHorizontal] = "░";
@@ -18,7 +86,7 @@ function checkKey(e) {
 		}
 		updatePosition ();
 	}
-	else if (e.keyCode === 39 && gameState !== "pause") {
+	else if (e.keyCode === 39 && gameState !== "pause") { //→
 		if (game[barVertical][bar[barLength] + 1] !== "█") {
 			if (gameState !== "play") {
 				game[ballVertical][ballHorizontal] = "░";
@@ -31,7 +99,7 @@ function checkKey(e) {
 		}
 		updatePosition ();
 	}
-	if (e.keyCode === 32) {
+	if (e.keyCode === 32) { //SPACE
 		const ballSlowness = 100;
 		e.preventDefault();
 		if (gameState === "stop" || gameState === "break") {
@@ -39,7 +107,7 @@ function checkKey(e) {
 			moveHorizontal = randomDirection();
 			gameState = "play";
 			gameInterval = window.setInterval(function(){
-				ballMove ();
+				moveBall();
 			}, ballSlowness);
 		}
 		else if (gameState === "play") {
@@ -49,105 +117,37 @@ function checkKey(e) {
 		}
 		else if  (gameState === "pause") {
 			gameInterval = window.setInterval(function(){
-				ballMove ();
+				moveBall();
 			}, ballSlowness);
-			setScore(score);
+			setScore(gameScore);
 			gameState = "play";
 		}
 	}
 }
-function ballMove () {
-	function scoring() {
-		score += 10;
-		setScore(score);
-	}
-	if (game[ballVertical][ballHorizontal + moveHorizontal] === "▓") {
-		game[ballVertical][ballHorizontal + moveHorizontal] = "░";
-		moveHorizontal *= -1;
-		scoring();
-	}
-	if (game[ballVertical + moveVertical][ballHorizontal] === "▓") {
-		game[ballVertical + moveVertical][ballHorizontal] = "░";
-		moveVertical *= -1;
-		 scoring();
-	}
-	else if (game[ballVertical + moveVertical][ballHorizontal + moveHorizontal] === "▓") {
-		game[ballVertical + moveVertical][ballHorizontal + moveHorizontal] = "░";
-		moveVertical *= -1;
-		scoring();
-	}
-	if (game[ballVertical][ballHorizontal + moveHorizontal] === "█") {
-		moveHorizontal *= -1;
-	}
-	if (game[ballVertical + moveVertical][ballHorizontal] === "█") {
-		moveVertical *= -1;
-	}
-	else if (game[ballVertical + moveVertical][ballHorizontal + moveHorizontal] === "█") {
-		moveVertical *= -1;
-	}
-	if (game[ballVertical + moveVertical][ballHorizontal + moveHorizontal] === "▀") {
-		if (game[ballVertical + moveVertical][ballHorizontal + moveHorizontal - 1] === "▀" && game[ballVertical + moveVertical][ballHorizontal + moveHorizontal + 1] === "▀"  && game[ballVertical + moveVertical][ballHorizontal + moveHorizontal - 2] === "▀" && game[ballVertical + moveVertical][ballHorizontal + moveHorizontal + 2] === "▀") {
-			game[ballVertical ][ballHorizontal ] = "░";
-			ballHorizontal += randomDirection();
-			game[ballVertical ][ballHorizontal ] = "●";
-		}
-		moveHorizontal = randomDirection();
-		moveVertical *= -1;
-		if (game[ballVertical + moveVertical][ballHorizontal + moveHorizontal] === "█") {
-			moveHorizontal *= -1
-		}
-	}
-	if (ballVertical === barVertical) {
-		clearInterval(gameInterval);
-		if (life === 0) {
-			gameState = "stop";
-			const gameOver = "Game Over!\nYour score: " + score + " pts";
-			alert(gameOver);
-			console.log(gameOver);
-		}
-		else {
-			gameState = "break";
-			life -= 1;
-			setLife(life);
-		}
-		reset();
-		return;
-	}
-	game[ballVertical + moveVertical][ballHorizontal + moveHorizontal] = "●";
-	game[ballVertical][ballHorizontal] = "░";
-	ballVertical += moveVertical;
-	ballHorizontal += moveHorizontal;
-	updatePosition();
-}
 function updatePosition() {
 	$("#game").html(game.map(a => a.join('')).join('<br>'));
 }
-function randomDirection() {
-	const directions = [1, -1];
-	const random = directions[Math.floor(Math.random() * directions.length)];
-	return random;
-}
-function setLife(life) {
+function setLife(gameLife) {
 	let lifeString = "";
-	for (let i = 0; i < life; i++) {
+	for (let i = 0; i < gameLife; i++) {
 		lifeString += "♥";
 	}
-	if (life === 0) {
+	if (gameLife === 0) {
 		lifeString = "<br>";
 	}
 	$("#life").html(lifeString);
 }
-function setScore(score) {
-	let lifeScore = "Score: " + score + " pts";
-	$("#score").html(lifeScore);
+function setScore(gameScore) {
+	let scoreString = "Score: " + gameScore + " pts";
+	$("#score").html(scoreString);
 }
-function reset() {
+function resetGame() {
 	if (gameState === "stop") {
 		game = JSON.parse(JSON.stringify(gameBackup));
-		score = 0;
-		life = 3;
-		setScore(score);
-		setLife(life);
+		gameScore = 0;
+		gameLife = 3;
+		setScore(gameScore);
+		setLife(gameLife);
 	}
 	game[ballVertical][ballHorizontal] = "░";
 	ballVertical = barVertical - 1;
@@ -162,7 +162,7 @@ function reset() {
 	}
 	updatePosition();
 }
-function init() {
+function initGame() {
 	gameState = "stop";
 	gameBackup = JSON.parse(JSON.stringify(game));
 	barVertical = game.length-2;
@@ -177,8 +177,8 @@ function init() {
 		'<p id="life"><p id="score"></p><p id="game"></p>' +
 	'</b>';
 	$(".main-title").after(initialization);
-	$(document).keydown(checkKey);
-	reset();
+	$(document).keydown(gameControl);
+	resetGame();
 }
 let game = [];
 game.push(["█", "█", "█", "█", "█", "█", "█", "█","█", "█", "█", "█", "█", "█", "█", "█", "█", "█", "█", "█", "█", "█", "█", "█", "█", "█", "█", "█", "█", "█", "█", "█", "█", "█", "█", "█", "█", "█", "█", "█", "█", "█","█", "█", "█", "█", "█", "█", "█", "█", "█"]);
@@ -213,5 +213,5 @@ game.push(["█", "█", "█", "█", "█", "█", "█", "█","█", "█", 
 let bar, barVertical, barHorizontal, barFirst, barLength;
 let ballVertical, ballHorizontal;
 let moveVertical, moveHorizontal;
-let gameState, score, life, gameInterval, gameBackup;
-init();
+let gameState, gameScore, gameLife, gameInterval, gameBackup;
+initGame();
