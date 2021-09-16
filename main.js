@@ -165,9 +165,9 @@ function reset() {
 function init() {
 	gameState = "stop";
 	originalGame = JSON.parse(JSON.stringify(game));
-	bar = [barHorizontal-3, barHorizontal-2, barHorizontal-1, barHorizontal , barHorizontal+1, barHorizontal+2, barHorizontal+3];
 	barVertical = game.length-2;
 	barHorizontal = (game[barVertical].length/2)-(1/2);
+	bar = [barHorizontal-3, barHorizontal-2, barHorizontal-1, barHorizontal , barHorizontal+1, barHorizontal+2, barHorizontal+3];
 	barFirst = 0;
 	barLength = bar.length - 1;
 	ballVertical = barVertical-1;
