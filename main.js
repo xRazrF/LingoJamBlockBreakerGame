@@ -96,7 +96,6 @@ function ballMove () {
 		moveVertical *= -1;
 	}
 	if (ballVertical === barVertical) {
-		const resetDelay = 0;
 		if (life === 0) {
 			clearInterval(runGame);
 							play = "stop";
@@ -215,5 +214,5 @@ game.push(["█", "█", "░", "░","░", "░", "░", "░", "░", "░", 
 game.push(["█", "█", "░", "░", "░", "░", "░", "░", "░", "░", "░", "░", "░", "░", "░", "░", "░", "░", "░", "░", "░", "░","░", "░", "░", "░", "░", "░", "░", "░", "░", "░", "░", "░", "░", "░", "░", "░", "░", "░", "░", "░","░", "░", "░", "░", "░", "░", "░", "█", "█"]);
 game.push(["█", "█", "█", "█", "█", "█", "█", "█","█", "█", "█", "█", "█", "█", "█", "█", "█", "█", "█", "█", "█", "█", "█", "█", "█", "█", "█", "█", "█", "█", "█", "█", "█", "█", "█", "█", "█", "█", "█", "█", "█", "█","█", "█", "█", "█", "█", "█", "█", "█", "█"]);
 let bar, barVertical, barHorizontal, ballVertical, ballHorizontal;
-let play, originalGame, life, runGame, moveVertical, moveHorizontal;
+let play, score, originalGame, life, runGame, moveVertical, moveHorizontal;
 init();
