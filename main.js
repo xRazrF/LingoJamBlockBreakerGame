@@ -143,7 +143,7 @@ function setScore(score) {
 }
 function reset() {
 	if (gameState === "stop") {
-		game = JSON.parse(JSON.stringify(originalGame));
+		game = JSON.parse(JSON.stringify(gameBackup));
 		score = 0;
 		life = 3;
 		setScore(score);
@@ -164,7 +164,7 @@ function reset() {
 }
 function init() {
 	gameState = "stop";
-	originalGame = JSON.parse(JSON.stringify(game));
+	gameBackup = JSON.parse(JSON.stringify(game));
 	barVertical = game.length-2;
 	barHorizontal = (game[barVertical].length/2)-(1/2);
 	bar = [barHorizontal-3, barHorizontal-2, barHorizontal-1, barHorizontal , barHorizontal+1, barHorizontal+2, barHorizontal+3];
@@ -213,5 +213,5 @@ game.push(["█", "█", "█", "█", "█", "█", "█", "█","█", "█", 
 let bar, barVertical, barHorizontal, barFirst, barLength;
 let ballVertical, ballHorizontal;
 let moveVertical, moveHorizontal;
-let gameState, score, life, gameInterval, originalGame;
+let gameState, score, life, gameInterval, gameBackup;
 init();
