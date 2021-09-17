@@ -1,3 +1,4 @@
+"use strict";
 function gameControl(e) {
 	e = e || window.event;
 	function moveBall() {
