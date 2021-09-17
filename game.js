@@ -151,7 +151,7 @@ function resetGame() {
 	}
 	game[ballVertical][ballHorizontal] = "░";
 	ballVertical = barVertical - 1;
-	ballHorizontal = (game[ballVertical].length/2)-(1/2);
+	ballHorizontal = (game[ballVertical].length-1)/2;
 	game[ballVertical][ballHorizontal] = "●";
 	for (let i = barFirst; i <= barLength; i++) {
 		game[barVertical][bar[i]] = "░";
@@ -166,12 +166,12 @@ function initGame() {
 	gameState = "stop";
 	gameBackup = JSON.parse(JSON.stringify(game));
 	barVertical = game.length-2;
-	barHorizontal = (game[barVertical].length/2)-(1/2);
+	barHorizontal = (game[barVertical].length-1)/2;
 	bar = [barHorizontal-3, barHorizontal-2, barHorizontal-1, barHorizontal , barHorizontal+1, barHorizontal+2, barHorizontal+3];
 	barFirst = 0;
 	barLength = bar.length - 1;
 	ballVertical = barVertical-1;
-	ballHorizontal = (game[ballVertical].length/2)-(1/2);
+	ballHorizontal = (game[ballVertical].length-1)/2;
 	const initialization = '' +
 	'<b id="gameArea" style="text-align: center; font-family: Courier New; line-height: 100%;">' +
 		'<p id="life"><p id="score"></p><p id="game"></p>' +
