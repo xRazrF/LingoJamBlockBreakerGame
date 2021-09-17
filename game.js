@@ -164,6 +164,7 @@ function resetGame() {
 	updatePosition();
 }
 function initGame() {
+	alert("Press 'space' to start or pause the game, press arrow buttons '←' or '→' to move, you can move the bar before the game started.");
 	gameState = "stop";
 	gameBackup = JSON.parse(JSON.stringify(game));
 	barVertical = game.length-2;
