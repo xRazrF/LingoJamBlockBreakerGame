@@ -174,6 +174,9 @@ function initGame() {
 	barRight = bar.length - 1;
 	ballVertical = barVertical-1;
 	ballHorizontal = (game[ballVertical].length-1)/2;
+	if($(".main-title").length === 0) {
+		$('body').append('<div class="main-title"></div>');   
+	}
 	const initialization = '' +
 	'<b id="gameArea" style="text-align: center; font-family: Courier New; line-height: 100%;">' +
 		'<p id="life"><p id="score"></p><p id="game"></p>' +
