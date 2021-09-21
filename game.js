@@ -75,26 +75,26 @@ function gameControl(e) {
 		return random;
 	}
 	if(e.keyCode === 37 && gameState !== "pause") { //←
-		if(game[barVertical][bar[barFirst] - 1] !== "█") {
+		if(game[barVertical][bar[barLeft] - 1] !== "█") {
 			if(gameState !== "play") {
 				game[ballVertical][ballHorizontal] = "░";
 				game[ballVertical][ballHorizontal + -1] = "●";
 				ballHorizontal += -1;
 			}
-			for(let i = barFirst; i <= barLength; i++){
+			for(let i = barLeft; i <= barRight; i++){
 				moveBar(i, -1);
 			}
 		}
 		updatePosition();
 	}
 	else if(e.keyCode === 39 && gameState !== "pause") { //→
-		if(game[barVertical][bar[barLength] + 1] !== "█") {
+		if(game[barVertical][bar[barRight] + 1] !== "█") {
 			if(gameState !== "play") {
 				game[ballVertical][ballHorizontal] = "░";
 				game[ballVertical][ballHorizontal + 1] = "●";
 				ballHorizontal += 1;
 			}
-			for(let i = barLength; i >= barFirst; i--){
+			for(let i = barRight; i >= barLeft; i--){
 				moveBar(i, 1);
 			}
 		}
@@ -154,11 +154,11 @@ function resetGame() {
 	ballVertical = barVertical - 1;
 	ballHorizontal = (game[ballVertical].length-1)/2;
 	game[ballVertical][ballHorizontal] = "●";
-	for(let i = barFirst; i <= barLength; i++) {
+	for(let i = barLeft; i <= barRight; i++) {
 		game[barVertical][bar[i]] = "░";
 	}
 	bar = [barHorizontal-3, barHorizontal-2, barHorizontal-1, barHorizontal , barHorizontal+1, barHorizontal+2, barHorizontal+3];
-	for(let i = barFirst; i <= barLength; i++) {
+	for(let i = barLeft; i <= barRight; i++) {
 		game[barVertical][bar[i]] = "▀";
 	}
 	updatePosition();
@@ -170,8 +170,8 @@ function initGame() {
 	barVertical = game.length-2;
 	barHorizontal = (game[barVertical].length-1)/2;
 	bar = [barHorizontal-3, barHorizontal-2, barHorizontal-1, barHorizontal , barHorizontal+1, barHorizontal+2, barHorizontal+3];
-	barFirst = 0;
-	barLength = bar.length - 1;
+	barLeft = 0;
+	barRight = bar.length - 1;
 	ballVertical = barVertical-1;
 	ballHorizontal = (game[ballVertical].length-1)/2;
 	const initialization = '' +
@@ -212,7 +212,7 @@ game.push(["█", "█", "░", "░","░", "░", "░", "░", "░", "░", 
 game.push(["█", "█", "░", "░","░", "░", "░", "░", "░", "░", "░", "░", "░", "░", "░", "░", "░", "░", "░", "░", "░", "░", "░", "░", "░", "░", "░", "░", "░", "░","░", "░", "░", "░", "░", "░", "░", "░", "░", "░", "░", "░", "░", "░", "░", "░", "░", "░", "░", "█", "█"]);
 game.push(["█", "█", "░", "░", "░", "░", "░", "░", "░", "░", "░", "░", "░", "░", "░", "░", "░", "░", "░", "░", "░", "░","░", "░", "░", "░", "░", "░", "░", "░", "░", "░", "░", "░", "░", "░", "░", "░", "░", "░", "░", "░","░", "░", "░", "░", "░", "░", "░", "█", "█"]);
 game.push(["█", "█", "█", "█", "█", "█", "█", "█","█", "█", "█", "█", "█", "█", "█", "█", "█", "█", "█", "█", "█", "█", "█", "█", "█", "█", "█", "█", "█", "█", "█", "█", "█", "█", "█", "█", "█", "█", "█", "█", "█", "█","█", "█", "█", "█", "█", "█", "█", "█", "█"]);
-let bar, barVertical, barHorizontal, barFirst, barLength;
+let bar, barVertical, barHorizontal, barLeft, barRight;
 let ballVertical, ballHorizontal;
 let moveVertical, moveHorizontal;
 let gameState, gameScore, gameLife, gameInterval, gameBackup;
