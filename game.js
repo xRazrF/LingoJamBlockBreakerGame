@@ -82,7 +82,7 @@ function gameControl(e) {
 				game[ballVertical][ballHorizontal + -1] = "●";
 				ballHorizontal += -1;
 			}
-			for(let i = barLeft; i <= barRight; i++){
+			for(let i = barLeft; i <= barRight; i++) {
 				moveBar(i, -1);
 			}
 		}
@@ -95,7 +95,7 @@ function gameControl(e) {
 				game[ballVertical][ballHorizontal + 1] = "●";
 				ballHorizontal += 1;
 			}
-			for(let i = barRight; i >= barLeft; i--){
+			for(let i = barRight; i >= barLeft; i--) {
 				moveBar(i, 1);
 			}
 		}
@@ -108,7 +108,7 @@ function gameControl(e) {
 			moveVertical = -1;
 			moveHorizontal = randomDirection();
 			gameState = "play";
-			gameInterval = window.setInterval(function(){
+			gameInterval = window.setInterval(function() {
 				moveBall();
 			}, ballSlowness);
 		}
@@ -118,7 +118,7 @@ function gameControl(e) {
 			gameState = "pause";
 		}
 		else if (gameState === "pause") {
-			gameInterval = window.setInterval(function(){
+			gameInterval = window.setInterval(function() {
 				moveBall();
 			}, ballSlowness);
 			setScore(gameScore);
