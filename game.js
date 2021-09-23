@@ -1,6 +1,5 @@
 "use strict";
 function gameControl(e) {
-	let moveVertical, moveHorizontal;
 	e = e || window.event;
 	function moveBall() {
 		function scoring() {
@@ -218,5 +217,6 @@ game.push(["█", "█", "░", "░", "░", "░", "░", "░", "░", "░",
 game.push(["█", "█", "█", "█", "█", "█", "█", "█","█", "█", "█", "█", "█", "█", "█", "█", "█", "█", "█", "█", "█", "█", "█", "█", "█", "█", "█", "█", "█", "█", "█", "█", "█", "█", "█", "█", "█", "█", "█", "█", "█", "█","█", "█", "█", "█", "█", "█", "█", "█", "█"]);
 let barPosition, barVertical, barHorizontal, barLeft, barRight;
 let ballVertical, ballHorizontal;
+let moveVertical, moveHorizontal;
 let gameState, gameScore, gameLife, gameInterval, gameBackup;
 initGame();
