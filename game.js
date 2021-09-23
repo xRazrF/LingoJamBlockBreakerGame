@@ -1,5 +1,6 @@
 "use strict";
 function gameControl(e) {
+	let moveVertical, moveHorizontal;
 	e = e || window.event;
 	function moveBall() {
 		function scoring() {
@@ -32,9 +33,9 @@ function gameControl(e) {
 		}
 		if(game[ballVertical + moveVertical][ballHorizontal + moveHorizontal] === "▀" || game[ballVertical + moveVertical][ballHorizontal] === "▀") {
 			if(game[ballVertical + moveVertical][ballHorizontal + moveHorizontal - 1] === "▀" && game[ballVertical + moveVertical][ballHorizontal + moveHorizontal + 1] === "▀"  && game[ballVertical + moveVertical][ballHorizontal + moveHorizontal - 2] === "▀" && game[ballVertical + moveVertical][ballHorizontal + moveHorizontal + 2] === "▀") {
-				game[ballVertical ][ballHorizontal ] = "░";
+				game[ballVertical][ballHorizontal] = "░";
 				ballHorizontal += randomDirection();
-				game[ballVertical ][ballHorizontal ] = "●";
+				game[ballVertical][ballHorizontal] = "●";
 			}
 			moveHorizontal = randomDirection();
 			moveVertical *= -1;
@@ -65,9 +66,9 @@ function gameControl(e) {
 		updatePosition();
 	}
 	function moveBar(a, b) {
-		game[barVertical][bar[a] + b] = "▀";
-		game[barVertical][bar[a]] = "░";
-		bar[a] += b;
+		game[barVertical][barPosition[a] + b] = "▀";
+		game[barVertical][barPosition[a]] = "░";
+		barPosition[a] += b;
 	}
 	function randomDirection() {
 		const directions = [1, -1];
@@ -75,7 +76,7 @@ function gameControl(e) {
 		return random;
 	}
 	if(e.keyCode === 37 && gameState !== "pause") { //←
-		if(game[barVertical][bar[barLeft] - 1] !== "█") {
+		if(game[barVertical][barPosition[barLeft] - 1] !== "█") {
 			if(gameState !== "play") {
 				game[ballVertical][ballHorizontal] = "░";
 				game[ballVertical][ballHorizontal + -1] = "●";
@@ -88,7 +89,7 @@ function gameControl(e) {
 		updatePosition();
 	}
 	else if(e.keyCode === 39 && gameState !== "pause") { //→
-		if(game[barVertical][bar[barRight] + 1] !== "█") {
+		if(game[barVertical][barPosition[barRight] + 1] !== "█") {
 			if(gameState !== "play") {
 				game[ballVertical][ballHorizontal] = "░";
 				game[ballVertical][ballHorizontal + 1] = "●";
@@ -155,23 +156,23 @@ function resetGame() {
 	ballHorizontal = (game[ballVertical].length-1)/2;
 	game[ballVertical][ballHorizontal] = "●";
 	for(let i = barLeft; i <= barRight; i++) {
-		game[barVertical][bar[i]] = "░";
+		game[barVertical][barPosition[i]] = "░";
 	}
-	bar = [barHorizontal-3, barHorizontal-2, barHorizontal-1, barHorizontal , barHorizontal+1, barHorizontal+2, barHorizontal+3];
+	barPosition = [barHorizontal-3, barHorizontal-2, barHorizontal-1, barHorizontal , barHorizontal+1, barHorizontal+2, barHorizontal+3];
 	for(let i = barLeft; i <= barRight; i++) {
-		game[barVertical][bar[i]] = "▀";
+		game[barVertical][barPosition[i]] = "▀";
 	}
 	updatePosition();
 }
 function initGame() {
-	alert("Press 'space' to start or pause the game, press arrow buttons '←' or '→' to move, you can move the bar before the game started.");
+	alert("Press 'space' to start or pause the game, press arrow buttons '←' or '→' to move, you can move the barPosition before the game started.");
 	gameState = "stop";
 	gameBackup = JSON.parse(JSON.stringify(game));
 	barVertical = game.length-2;
 	barHorizontal = (game[barVertical].length-1)/2;
-	bar = [barHorizontal-3, barHorizontal-2, barHorizontal-1, barHorizontal , barHorizontal+1, barHorizontal+2, barHorizontal+3];
+	barPosition = [barHorizontal-3, barHorizontal-2, barHorizontal-1, barHorizontal , barHorizontal+1, barHorizontal+2, barHorizontal+3];
 	barLeft = 0;
-	barRight = bar.length - 1;
+	barRight = barPosition.length - 1;
 	ballVertical = barVertical-1;
 	ballHorizontal = (game[ballVertical].length-1)/2;
 	if($(".main-title").length === 0) {
@@ -215,8 +216,7 @@ game.push(["█", "█", "░", "░","░", "░", "░", "░", "░", "░", 
 game.push(["█", "█", "░", "░","░", "░", "░", "░", "░", "░", "░", "░", "░", "░", "░", "░", "░", "░", "░", "░", "░", "░", "░", "░", "░", "░", "░", "░", "░", "░","░", "░", "░", "░", "░", "░", "░", "░", "░", "░", "░", "░", "░", "░", "░", "░", "░", "░", "░", "█", "█"]);
 game.push(["█", "█", "░", "░", "░", "░", "░", "░", "░", "░", "░", "░", "░", "░", "░", "░", "░", "░", "░", "░", "░", "░","░", "░", "░", "░", "░", "░", "░", "░", "░", "░", "░", "░", "░", "░", "░", "░", "░", "░", "░", "░","░", "░", "░", "░", "░", "░", "░", "█", "█"]);
 game.push(["█", "█", "█", "█", "█", "█", "█", "█","█", "█", "█", "█", "█", "█", "█", "█", "█", "█", "█", "█", "█", "█", "█", "█", "█", "█", "█", "█", "█", "█", "█", "█", "█", "█", "█", "█", "█", "█", "█", "█", "█", "█","█", "█", "█", "█", "█", "█", "█", "█", "█"]);
-let bar, barVertical, barHorizontal, barLeft, barRight;
+let barPosition, barVertical, barHorizontal, barLeft, barRight;
 let ballVertical, ballHorizontal;
-let moveVertical, moveHorizontal;
 let gameState, gameScore, gameLife, gameInterval, gameBackup;
 initGame();
