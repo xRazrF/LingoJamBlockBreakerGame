@@ -125,23 +125,6 @@ function gameControl(e) {
 		}
 	}
 }
-function updatePosition() {
-	$("#game").html(game.map(a => a.join('')).join('<br>'));
-}
-function setLife(gameLife) {
-	let lifeString = "";
-	for(let i = 0; i < gameLife; i++) {
-		lifeString += "♥";
-	}
-	if(gameLife === 0) {
-		lifeString = "<br>";
-	}
-	$("#life").html(lifeString);
-}
-function setScore(gameScore) {
-	let scoreString = "Score: " + gameScore + " pts";
-	$("#score").html(scoreString);
-}
 function resetGame() {
 	if(gameState === "stop") {
 		game = JSON.parse(JSON.stringify(gameBackup));
@@ -184,6 +167,23 @@ function initGame() {
 	$(".main-title").after(initialization);
 	$(document).keydown(gameControl);
 	resetGame();
+}
+function updatePosition() {
+	$("#game").html(game.map(a => a.join('')).join('<br>'));
+}
+function setLife(gameLife) {
+	let lifeString = "";
+	for(let i = 0; i < gameLife; i++) {
+		lifeString += "♥";
+	}
+	if(gameLife === 0) {
+		lifeString = "<br>";
+	}
+	$("#life").html(lifeString);
+}
+function setScore(gameScore) {
+	let scoreString = "Score: " + gameScore + " pts";
+	$("#score").html(scoreString);
 }
 let game = [];
 game.push(["█", "█", "█", "█", "█", "█", "█", "█","█", "█", "█", "█", "█", "█", "█", "█", "█", "█", "█", "█", "█", "█", "█", "█", "█", "█", "█", "█", "█", "█", "█", "█", "█", "█", "█", "█", "█", "█", "█", "█", "█", "█","█", "█", "█", "█", "█", "█", "█", "█", "█"]);
