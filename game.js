@@ -1,6 +1,5 @@
 "use strict";
 function gameControl(e) {
-	e = e || window.event;
 	function moveBall() {
 		function scoring() {
 			gameScore += 10;
@@ -74,6 +73,7 @@ function gameControl(e) {
 		const random = directions[Math.floor(Math.random() * directions.length)];
 		return random;
 	}
+	e = e || window.event;
 	if(e.keyCode === 37 && gameState !== "pause") { //←
 		if(game[barVertical][barPosition[barLeft] - 1] !== "█") {
 			if(gameState !== "play") {
